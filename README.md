@@ -21,10 +21,6 @@
     - Nome: Armazena o primeiro nome do usuário.
     - CPF: Identificador único do usuário.
     - Senha: Senha de acesso à conta.
-    - Saldo: Saldo em reais.
-    - Bit, Eth, Rip: Saldo em Bitcoin, Ethereum e Ripple, respectivamente.
-    - Transações: Histórico de transações realizadas.
-    - Num_Transacoes: Contador de transações registradas.
 
 &nbsp;
 ## Data
