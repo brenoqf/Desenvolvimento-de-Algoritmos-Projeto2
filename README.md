@@ -32,6 +32,7 @@
 &nbsp;
 # **Funções**
 &nbsp;
+
 ## Salvar Usuário
 - A função "salvar_usuario" é responsável por gravar os dados do usuário no arquivo binário correspondente. Ela abre o arquivo em modo de escrita binária, escreve os dados da estrutura Usuario e fecha o arquivo. Se ocorrer algum erro durante a abertura do arquivo, uma mensagem de erro é exibida.
  
@@ -46,10 +47,18 @@
     - Nome: O primeiro nome do usuário.
     - CPF: O Cadastro de Pessoas Físicas, utilizado como identificador único.
     - Senha: Uma senha segura para acessar a conta.
- 
 
     - Após a inserção dessas informações, o sistema valida a senha para garantir que ela atende aos critérios de segurança (por exemplo, mínimo de 6 caracteres). Se a validação for bem-sucedida, os dados do usuário são salvos em um arquivo binário específico, nomeado pelo CPF do usuário, garantindo que cada usuário tenha seu próprio arquivo de dados.
+
+## Login de Usuário
+
+- A função de login permite que usuários existentes acessem suas contas. Para realizar o login, o usuário deve fornecer:
+
+    - CPF: Para identificar sua conta.
+    - Senha: Para autenticação.
  
+
+    - O sistema verifica se o CPF está cadastrado lendo o arquivo correspondente. Em seguida, compara a senha fornecida com a senha armazenada no arquivo. Se ambas as informações coincidirem, o usuário é autenticado com sucesso e pode acessar o menu principal do sistema. Caso contrário, uma mensagem de erro é exibida, e o usuário é solicitado a tentar novamente.
 &nbsp;
 
 &nbsp;
