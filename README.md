@@ -43,12 +43,12 @@
 ## Cadastro de Usuário
 - A função de cadastro permite que novos usuários criem uma conta no sistema. Durante o cadastro, o usuário deve fornecer:
 
- - Nome: O primeiro nome do usuário.
- - CPF: O Cadastro de Pessoas Físicas, utilizado como identificador único.
- - Senha: Uma senha segura para acessar a conta.
+    - Nome: O primeiro nome do usuário.
+    - CPF: O Cadastro de Pessoas Físicas, utilizado como identificador único.
+    - Senha: Uma senha segura para acessar a conta.
  
 
-- Após a inserção dessas informações, o sistema valida a senha para garantir que ela atende aos critérios de segurança (por exemplo, mínimo de 6 caracteres). Se a validação for bem-sucedida, os dados do usuário são salvos em um arquivo binário específico, nomeado pelo CPF do usuário, garantindo que cada usuário tenha seu próprio arquivo de dados.
+    - Após a inserção dessas informações, o sistema valida a senha para garantir que ela atende aos critérios de segurança (por exemplo, mínimo de 6 caracteres). Se a validação for bem-sucedida, os dados do usuário são salvos em um arquivo binário específico, nomeado pelo CPF do usuário, garantindo que cada usuário tenha seu próprio arquivo de dados.
  
 &nbsp;
 
