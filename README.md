@@ -13,13 +13,12 @@ Para compilar e executar o código, siga as instruções abaixo no terminal da s
 
 1. **Compilação**:
    ```bash
-   gcc nome_do_arquivo.c -o gerenciador_contatos
+   gcc main2.c -o main2.exe
    ```
-   Substitua `nome_do_arquivo.c` pelo nome do arquivo que contém o código.
 
 2. **Execução**:
    ```bash
-   ./gerenciador_contatos
+   ./main2.exe
    ```
    O programa então abrirá e permitirá a utilização das funcionalidades disponíveis.
 
