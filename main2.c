@@ -1,107 +1,152 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <string.h>
 
-#define WHITE_BOLD "\e[1;37m"  // Branco e Negrito
-#define GREEN_UNDER "\e[4;32m" // Verde e Sublinhado
-#define RESET "\x1b[0;37m"     // Branco
-#define BACKGROUND_RED "\e[41m"      // Fundo Vermelho
-#define CYAN_BOLD " \e[1;36m"  // Ciano e Negrito
+#define WHITE_BOLD "\e[1;37m"   // Branco e Negrito
+#define GREEN_UNDER "\e[4;32m"  // Verde e Sublinhado
+#define GREEN_BOLD "\e[1;92m"    // Verde e Negrito
+#define RESET "\x1b[0;37m"       // Branco
+#define BACKGROUND_RED "\e[41m"  // Fundo Vermelho
+#define RED_BOLD "\033[1;31m"    // Vermelho e Negrito
+#define CYAN_BOLD " \e[1;36m"    // Ciano e Negrito
+
+#define MAX_CONTATOS 100
+#define NOME_LEN 50
+#define TELEFONE_LEN 15
 
 typedef struct {
-    char nome[255];
-    char CPF[14];
-    char senha[50];
-    int casos[50];
-} Cliente;
+    char nome[NOME_LEN];
+    char telefone[TELEFONE_LEN];
+} Contato;
 
-typedef struct {
-    char nome[255];
-    char CPF[14];
-    char senha[50];
+void salvar_texto(Contato contatos[], int num_contatos);
+void salvar_binario(Contato contatos[], int num_contatos);
 
-} Advogado;
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct Data {
-  struct tm data;
-  char data2[20];
-};
+int adicionar_contato(Contato contatos[], int *num_contatos) {
+    if (*num_contatos >= MAX_CONTATOS) {
+        printf(BACKGROUND_RED "Limite de contatos atingido.\n" RESET);
+        return 0;
+    }
+    printf(CYAN_BOLD "Digite o nome do contato: " RESET);
+    scanf(" %[^\n]", contatos[*num_contatos].nome);
+    printf(CYAN_BOLD "Digite o telefone: " RESET);
+    scanf(" %[^\n]", contatos[*num_contatos].telefone);
+    (*num_contatos)++;
 
-void dia_hora(struct Data *d) {
-  time_t t = time(NULL);
-  d->data = *localtime(&t);
-
-  strftime(d->data2, sizeof(d->data2), "%d-%m-%Y / %H:%M", &d->data);
+    // Salvar automaticamente após adicionar um contato
+    salvar_texto(contatos, *num_contatos);
+    salvar_binario(contatos, *num_contatos);
+    printf(GREEN_BOLD "Contato salvo com sucesso!\n" RESET);
+    return 1;
 }
 
-// Função para salvar um usuário em um arquivo .dat
-int salvar_usuario(const Cliente *user) {
-  char filename[64];
-  snprintf(filename, sizeof(filename), "%s.dat", user->CPF);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  FILE *file =
-      fopen(filename, "wb"); // "wb" para abrir em modo de escrita binária
-  if (file == NULL) {
-    perror("Erro ao abrir o arquivo");
-    return -1;
+void lista_contatos(Contato contatos[], int num_contatos) {
+  if(num_contatos == 0){
+    printf(BACKGROUND_RED " Nenhum contato encontrado. :< " RESET "\n");
   }
-  fwrite(user, sizeof(Cliente), 1, file);
-  fclose(file);
-  return 0;
-}
-
-// Função para carregar os arquivos salvos
-int carregar_usuario(const char *cpf, Cliente *user) {
-  char filename[64];
-  snprintf(filename, sizeof(filename), "%s.dat", cpf);
-
-  FILE *file =
-      fopen(filename, "rb"); // "rb" para abrir em modo de leitura binária
-  if (file == NULL) {
-    return -1;
+  else{
+  for (int i = 0; i < num_contatos; i++) {
+      printf(GREEN_UNDER "Contato %d: " GREEN_BOLD "%s - %s\n" RESET, i + 1, contatos[i].nome, contatos[i].telefone);
+   }
   }
-
-  size_t read = fread(user, sizeof(Cliente), 1, file);
-  fclose(file);
-
-  // Verifica se a leitura foi bem-sucedida
-  if (read != 1) {
-    return -1;
-  }
-  return 0;
 }
 
-int validar_cpf(const char *cpf) {
-  if (strlen(cpf) < 11) {
-    printf(BACKGROUND_RED "CPF invalido, deve ter 11 caracteres.\n" RESET);
-    return -1;
-  }
-  return 0;
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void salvar_texto(Contato contatos[], int num_contatos) {
+    FILE *file = fopen("contatos.txt", "w");
+    if (file == NULL) {
+        printf(BACKGROUND_RED "Erro ao abrir o arquivo.\n" RESET);
+        return;
+    }
+    for (int i = 0; i < num_contatos; i++) {
+        fprintf(file, "%s,%s\n", contatos[i].nome, contatos[i].telefone);
+    }
+    fclose(file);
 }
 
-int validar_senha(const char *senha) {
-  if (strlen(senha) < 6) {
-    printf(BACKGROUND_RED "Senha muito curta, deve ter pelo menos 6 "
-                               "caracteres." RESET "\n");
-    return -1;
-  }
-  return 0;
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void salvar_binario(Contato contatos[], int num_contatos) {
+    FILE *file = fopen("contatos.bin", "wb");
+    if (file == NULL) {
+        printf(BACKGROUND_RED "Erro ao abrir o arquivo.\n" RESET);
+        return;
+    }
+    fwrite(contatos, sizeof(Contato), num_contatos, file);
+    fclose(file);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int inicio() {
-    int choice;
-    
-    printf(WHITE_BOLD "==== Programa de Advocacia ====\n" RESET);
-    printf(WHITE_BOLD "1. Cadastro de Advogado\n2. Login de Advogado\n3. Cadastro de Cliente\n4. Login de Cliente\n" RESET);
-    printf("Escolha uma das opcoes acima: ");
-    scanf("%i", choice);
-    return 0;
+int carregar_contatos(Contato contatos[]) {
+    FILE *file = fopen("contatos.bin", "rb");
+    int num_contatos = fread(contatos, sizeof(Contato), MAX_CONTATOS, file);
+    fclose(file);
+    return num_contatos;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void deletar_contato(Contato contatos[], int *num_contatos) {
+    int index;
+    printf(CYAN_BOLD "Digite o numero do contato a ser deletado: " RESET);
+    scanf("%d", &index);
+
+    if (index < 1 || index > *num_contatos) {
+        printf(BACKGROUND_RED "Numero invalido!\n" RESET);
+        return;
+    }
+
+    for (int i = index - 1; i < *num_contatos - 1; i++) {
+        contatos[i] = contatos[i + 1];
+    }
+    (*num_contatos)--;
+
+    // Salvar após deletar um contato
+    salvar_texto(contatos, *num_contatos);
+    salvar_binario(contatos, *num_contatos);
+    printf(GREEN_BOLD "Contato deletado com sucesso!\n" RESET);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main() {
-    inicio();
-    return 0;
+    Contato contatos[MAX_CONTATOS];
+    int num_contatos = carregar_contatos(contatos);
+    int opcao;
+
+    do {
+        printf(GREEN_BOLD "\n====== Bem Vindo ao seu perfil de Contatos. Escolha uma das opcoes abaixo. ======\n" RESET);
+        printf(CYAN_BOLD "1. Adicionar contato\n" RESET);
+        printf(CYAN_BOLD "2. Lista contatos\n" RESET);
+        printf(CYAN_BOLD "3. Deletar contato\n" RESET);
+        printf(CYAN_BOLD "4. Sair\n" RESET);
+        printf(GREEN_BOLD "Escolha uma opcao: " RESET);
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+          case 1:
+            adicionar_contato(contatos, &num_contatos);
+            break;
+          case 2:
+            lista_contatos(contatos, num_contatos);
+            break;
+          case 3:
+            deletar_contato(contatos, &num_contatos);
+            break;
+          case 4:
+            printf(RED_BOLD "Saindo...\n" RESET);
+            printf(GREEN_UNDER "Volte sempre :> \n" RESET);
+            return 0;
+          default:
+            printf("Opção inválida!\n");
+      }
+    } while (opcao != 0);
+
+  return 0;
 }
