@@ -1,75 +1,64 @@
-# Desenvolvimento de Algoritmos 
-### Projeto 2
-> A ideia do projeto é fazer um programa de advocacia para analisar agendamentos, processos realizados sob o CPF de uma pessoa. As informações mais pessoais somente poderiam ser acessadas pela pessoa, pelo advogado contratado ou providenciado e pelo juiz do caso
+# Gerenciador de Contatos
+### Projeto em C para Gerenciamento de Lista Telefônica
+> Este programa de agenda telefônica permite adicionar, visualizar, deletar e salvar contatos. Cada contato contém um nome e um número de telefone, armazenados em arquivos de texto e binário para preservar as informações entre as sessões.
 
 ## Objetivo
 
+Desenvolver um sistema simples de gerenciamento de contatos com armazenamento local e interface baseada em terminal.
+
 &nbsp;
 
-## Compliação e Execução
- - Para compilar o código, abra o terminal do compilador ou IDE escolhida e siga o passo a passo:
-   - Digite: **gcc code.c -o code.exe** (onde está escrito "code", coloque o nome que você deu para o arquivo contendo o código)
-   - Após isso, digite: **.\code.exe**
- - Com isso feito, o programa deve rolar normalmente.
-   
+## Compilação e Execução
+Para compilar e executar o código, siga as instruções abaixo no terminal da sua IDE ou compilador:
+
+1. **Compilação**:
+   ```bash
+   gcc main2.c -o main2.exe
+   ```
+
+2. **Execução**:
+   ```bash
+   ./main2.exe
+   ```
+   O programa então abrirá e permitirá a utilização das funcionalidades disponíveis.
+
 &nbsp;
 
 # **Structs**
 
-## Usuário
- - A struct 'Usuario' armazena todas as informações necessárias para gerenciar a conta de um usuário, incluindo: 
-    - Nome: Armazena o primeiro nome do usuário.
-    - CPF: Identificador único do usuário.
-    - Senha: Senha de acesso à conta.
+## Contato
+A struct `Contato` armazena as informações de cada contato, incluindo:
+   - `nome`: Nome do contato (máximo de 50 caracteres).
+   - `telefone`: Número de telefone (máximo de 15 caracteres).
 
 &nbsp;
-## Data
 
-- A struct 'Data' armazena informações de data e hora para registrar quando cada transação foi realizada. Isso inclui:
-    - Data: Estrutura 'tm' que contém detalhes como ano, mês, dia, hora, minuto e segundo.
-    - Data2: String formatada que representa a data e hora em um formato legível.
-
-&nbsp;
 # **Funções**
-&nbsp;
 
-## Salvar Usuário
-- A função "salvar_usuario" é responsável por gravar os dados do usuário no arquivo binário correspondente. Ela abre o arquivo em modo de escrita binária, escreve os dados da estrutura Usuario e fecha o arquivo. Se ocorrer algum erro durante a abertura do arquivo, uma mensagem de erro é exibida.
+### `adicionar_contato`
+Adiciona um novo contato à lista. Solicita ao usuário que insira o nome e o telefone e armazena as informações. Após adicionar, o contato é salvo automaticamente nos arquivos `contatos.txt` (texto) e `contatos.bin` (binário).
 
-## verificação de CPF
-- A função verifica se o CPF colocado tem exatamente onze digitos assim sendo valida. Caso seja diferente de onze um mensagem de erro é exibida
-  
-## verificação de senha
-- A função verifica se a senha colocado é maior que seis digitos assim sendo valida. Caso seja menor que sei uma mensagem de erro é exibida
-  
-## Login Cliente
+### `lista_contatos`
+Exibe todos os contatos atualmente salvos na lista. Se não houver contatos, informa que a lista está vazia.
 
-## Carregar Usuário
-- A função "carregar_usuario" lê os dados do usuário a partir do arquivo binário correspondente ao CPF fornecido. Ela abre o arquivo em modo de leitura binária, lê os dados para a estrutura Usuario e fecha o arquivo. Se o arquivo não for encontrado ou ocorrer algum erro durante a leitura, a função retorna um código de erro.
- 
+### `salvar_texto` e `salvar_binario`
+Salvam a lista de contatos em arquivos. `salvar_texto` armazena as informações no arquivo `contatos.txt`, enquanto `salvar_binario` as armazena em `contatos.bin` para facilitar a recuperação.
 
-## Cadastro de Usuário
-- A função de cadastro permite que novos usuários criem uma conta no sistema. Durante o cadastro, o usuário deve fornecer:
+### `carregar_contatos`
+Carrega os contatos do arquivo `contatos.bin` ao iniciar o programa, permitindo que a lista de contatos seja recuperada de sessões anteriores.
 
-    - Nome: O primeiro nome do usuário.
-    - CPF: O Cadastro de Pessoas Físicas, utilizado como identificador único.
-    - Senha: Uma senha segura para acessar a conta.
+### `deletar_contato`
+Permite que o usuário remova um contato específico da lista com base no índice fornecido. Após deletar, os arquivos são atualizados para refletir a mudança.
 
-    - Após a inserção dessas informações, o sistema valida a senha para garantir que ela atende aos critérios de segurança (por exemplo, mínimo de 6 caracteres). Se a validação for bem-sucedida, os dados do usuário são salvos em um arquivo binário específico, nomeado pelo CPF do usuário, garantindo que cada usuário tenha seu próprio arquivo de dados.
-
-## Login de Usuário
-
-- A função de login permite que usuários existentes acessem suas contas. Para realizar o login, o usuário deve fornecer:
-
-    - CPF: Para identificar sua conta.
-    - Senha: Para autenticação.
- 
-
-    - O sistema verifica se o CPF está cadastrado lendo o arquivo correspondente. Em seguida, compara a senha fornecida com a senha armazenada no arquivo. Se ambas as informações coincidirem, o usuário é autenticado com sucesso e pode acessar o menu principal do sistema. Caso contrário, uma mensagem de erro é exibida, e o usuário é solicitado a tentar novamente.
-&nbsp;
+### `main`
+Exibe um menu de opções, permitindo que o usuário adicione, visualize e delete contatos ou saia do programa. A interação é baseada em escolhas numéricas.
 
 &nbsp;
-## **Participantes**
+
+# **Formatação de Cores**
+O programa usa códigos ANSI para formatar a saída no terminal, tornando os avisos e mensagens mais chamativos.
+
+# **Participantes**
 - Breno Queiroga Faustino R.A: 22124001-3
 - Rafael Levi Ramos Fernandes R.A: 22124057-5
 - Vinicius Brasileiro Nobre R.A: 22124013-8
