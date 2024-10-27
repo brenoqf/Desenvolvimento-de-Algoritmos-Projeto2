@@ -55,6 +55,9 @@ Exibe um menu de opções, permitindo que o usuário adicione, visualize e delet
 
 &nbsp;
 
+# **Formatação de Cores**
+O programa usa códigos ANSI para formatar a saída no terminal, tornando os avisos e mensagens mais chamativos.
+
 # **Participantes**
 - Breno Queiroga Faustino R.A: 22124001-3
 - Rafael Levi Ramos Fernandes R.A: 22124057-5
