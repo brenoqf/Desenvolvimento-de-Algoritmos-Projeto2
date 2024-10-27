@@ -1,42 +1,62 @@
-# Desenvolvimento de Algoritmos 
-### Projeto 2
-> A ideia do projeto é fazer um programa de advocacia para analisar agendamentos, processos realizados sob o CPF de uma pessoa. As informações mais pessoais somente poderiam ser acessadas pela pessoa, pelo advogado contratado ou providenciado e pelo juiz do caso
+# Gerenciador de Contatos
+### Projeto em C para Gerenciamento de Lista Telefônica
+> Este programa de agenda telefônica permite adicionar, visualizar, deletar e salvar contatos. Cada contato contém um nome e um número de telefone, armazenados em arquivos de texto e binário para preservar as informações entre as sessões.
 
 ## Objetivo
 
+Desenvolver um sistema simples de gerenciamento de contatos com armazenamento local e interface baseada em terminal.
+
 &nbsp;
 
-## Compliação e Execução
- - Para compilar o código, abra o terminal do compilador ou IDE escolhida e siga o passo a passo:
-   - Digite: **gcc code.c -o code.exe** (onde está escrito "code", coloque o nome que você deu para o arquivo contendo o código)
-   - Após isso, digite: **.\code.exe**
- - Com isso feito, o programa deve rolar normalmente.
-   
+## Compilação e Execução
+Para compilar e executar o código, siga as instruções abaixo no terminal da sua IDE ou compilador:
+
+1. **Compilação**:
+   ```bash
+   gcc nome_do_arquivo.c -o gerenciador_contatos
+   ```
+   Substitua `nome_do_arquivo.c` pelo nome do arquivo que contém o código.
+
+2. **Execução**:
+   ```bash
+   ./gerenciador_contatos
+   ```
+   O programa então abrirá e permitirá a utilização das funcionalidades disponíveis.
+
 &nbsp;
 
 # **Structs**
 
-## Usuário
- - A struct 'Usuario' armazena todas as informações necessárias para gerenciar a conta de um usuário, incluindo: 
-    - Nome: Armazena o primeiro nome do usuário.
-    - CPF: Identificador único do usuário.
-    - Senha: Senha de acesso à conta.
+## Contato
+A struct `Contato` armazena as informações de cada contato, incluindo:
+   - `nome`: Nome do contato (máximo de 50 caracteres).
+   - `telefone`: Número de telefone (máximo de 15 caracteres).
 
 &nbsp;
-## Data
 
-- A struct 'Data' armazena informações de data e hora para registrar quando cada transação foi realizada. Isso inclui:
-    - Data: Estrutura 'tm' que contém detalhes como ano, mês, dia, hora, minuto e segundo.
-    - Data2: String formatada que representa a data e hora em um formato legível.
-
-&nbsp;
 # **Funções**
 
-##DF
-&nbsp;
+### `adicionar_contato`
+Adiciona um novo contato à lista. Solicita ao usuário que insira o nome e o telefone e armazena as informações. Após adicionar, o contato é salvo automaticamente nos arquivos `contatos.txt` (texto) e `contatos.bin` (binário).
+
+### `lista_contatos`
+Exibe todos os contatos atualmente salvos na lista. Se não houver contatos, informa que a lista está vazia.
+
+### `salvar_texto` e `salvar_binario`
+Salvam a lista de contatos em arquivos. `salvar_texto` armazena as informações no arquivo `contatos.txt`, enquanto `salvar_binario` as armazena em `contatos.bin` para facilitar a recuperação.
+
+### `carregar_contatos`
+Carrega os contatos do arquivo `contatos.bin` ao iniciar o programa, permitindo que a lista de contatos seja recuperada de sessões anteriores.
+
+### `deletar_contato`
+Permite que o usuário remova um contato específico da lista com base no índice fornecido. Após deletar, os arquivos são atualizados para refletir a mudança.
+
+### `main`
+Exibe um menu de opções, permitindo que o usuário adicione, visualize e delete contatos ou saia do programa. A interação é baseada em escolhas numéricas.
 
 &nbsp;
-## **Participantes**
+
+# **Participantes**
 - Breno Queiroga Faustino R.A: 22124001-3
 - Rafael Levi Ramos Fernandes R.A: 22124057-5
 - Vinicius Brasileiro Nobre R.A: 22124013-8
